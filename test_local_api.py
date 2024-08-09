@@ -1,6 +1,8 @@
 import requests
 
-url = "http://127.0.0.1:8000/posts/"
+# url = "http://127.0.0.1:8000/posts/" # local url
+url = "http://ec2-user@ec2-54-87-73-141.compute-1.amazonaws.com:8000"
+
 post_data = {
     "title": "Post created with API",
     "content": "This is the content of the API post.",

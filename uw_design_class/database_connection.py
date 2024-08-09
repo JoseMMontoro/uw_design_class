@@ -8,7 +8,7 @@ from sqlalchemy.orm import sessionmaker
 dotenv.load_dotenv()
 DB_USER = os.getenv("DATABASE_USER")
 DB_PASSWORD = os.getenv("DATABASE_PWD")
-DB_HOST = "ec2-52-90-131-143.compute-1.amazonaws.com"
+DB_HOST = "ec2-54-87-73-141.compute-1.amazonaws.com"
 DB_PORT = "5432"  # Default PostgreSQL port
 DB_NAME = "uw_design_blog"
 
