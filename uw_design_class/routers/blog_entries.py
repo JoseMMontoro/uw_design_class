@@ -25,6 +25,7 @@ def create_post(post_schema: schemas.PostCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_post)
     return db_post
+
 @router.get("/posts/", response_model=List[schemas.Post])
 def read_posts(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     posts = db.query(models.Post).offset(skip).limit(limit).all()
