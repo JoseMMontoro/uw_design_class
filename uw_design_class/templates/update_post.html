@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Post</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> <!-- Bootstrap CSS -->
+</head>
+<body>
+    <div class="container mt-5">
+        <header>
+            <h1>Update Post</h1>
+            <a href="/" class="btn btn-secondary">Home</a>
+        </header>
+
+        <main class="mt-4">
+            <h2>Current Post</h2>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">{{ post.content }}</p>
+                </div>
+            </div>
+
+            <hr>
+
+            <h2>Update Post</h2>
+            <form action="/commit-update-post/{{ post.postid }}" method="post" class="mb-4">
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" class="form-control" value="{{ post.title }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="content">Content:</label>
+                    <textarea id="content" name="content" class="form-control" rows="5" required>{{ post.content }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="authorid">Author ID:</label>
+                    <input type="number" id="authorid" name="authorid" class="form-control" value="{{ post.authorid }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="blogid">Blog ID:</label>
+                    <input type="number" id="blogid" name="blogid" class="form-control" value="{{ post.blogid }}" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update Post</button>
+                <a href="/posts/{{ post.postid }}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </main>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

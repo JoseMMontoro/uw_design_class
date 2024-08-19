@@ -1,10 +1,13 @@
+import time
+from pprint import pprint
+
 import requests
 
-# base_url = "http://127.0.0.1:8000/posts/" # local url
-base_url = "http://172.31.37.99:8000"
+base_url = "http://50.17.204.48:8000"
 
 ## GET
 # test get all posts
+pprint("GET ALL POSTS==")
 url = f"{base_url}/posts"
 params = {
     "skip": 0,  # Offset
@@ -14,23 +17,25 @@ params = {
 response = requests.get(url, params=params)
 
 if response.status_code == 200:
-    print("Posts retrieved successfully:", response.json())
+    pprint(response.json())
 else:
-    print("Error retrieving posts:", response.text)
+    pprint(response.text)
 
-
+time.sleep(3)
+pprint("GET SINGLE POST==")
 # Test get single post
 url = f"{base_url}/posts/1"
 
 response = requests.get(url)
 
 if response.status_code == 200:
-    print("Post retrieved successfully:", response.json())
+    pprint(response.json())
 else:
-    print("Error retrieving post:", response.text)
+    pprint(response.text)
 
-
+time.sleep(3)
 ## POST
+pprint("POST CREATE POST==")
 url = f"{base_url}/posts/"
 post_data = {
     "title": "Post created with API",
@@ -42,14 +47,16 @@ post_data = {
 response = requests.post(url, json=post_data)
 
 if response.status_code == 200:
-    print("Post created successfully:", response.json())
+    pprint(response.json())
 else:
-    print("Error creating post:", response.text)
+    pprint(response.text)
 
 # use this new post for testing
 new_test_post_id = response.json()['postid']
 
+time.sleep(3)
 ## UPDATE
+pprint("UPDATE SINGLE POST==")
 # test update single post
 url = f"{base_url}/posts/{new_test_post_id}"
 update_data = {
@@ -61,18 +68,20 @@ update_data = {
 response = requests.put(url, json=update_data)
 
 if response.status_code == 200:
-    print("Post updated successfully:", response.json())
+    pprint(response.json())
 else:
-    print("Error updating post:", response.text)
+    pprint(response.text)
 
+time.sleep(3)
 ## DELETE
+pprint("DELETE SINGLE POST")
 url = f"{base_url}/posts/{new_test_post_id}"
 
 response = requests.delete(url)
 
 if response.status_code == 200:
-    print("Post deleted successfully:", response.json())
+    pprint(response.json())
 else:
-    print("Error deleting post:", response.text)
+    pprint(response.text)
 
 
