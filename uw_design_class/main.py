@@ -6,18 +6,20 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from starlette.responses import HTMLResponse, RedirectResponse
 
-import uw_design_class.api_schemas as schemas
 import uw_design_class.database_models as models
 from uw_design_class.database_connection import get_db
+from uw_design_class.singleton_logger import SingletonLogger
 
 app = FastAPI()
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
+logger = SingletonLogger()
 
 @router.get("/", response_class=HTMLResponse)
 def home(request: Request, db: Session = Depends(get_db)):
     posts = db.query(models.Post).all()
+    logger.log(f"Accessed home page with {len(posts)} posts", module="API-Routes")
     return templates.TemplateResponse("index.html", {"request": request, "posts": posts})
 
 @router.post("/create-post")
@@ -41,19 +43,23 @@ def create_post(request: Request,
     )
     db.add(db_post)
     db.commit()
+    logger.log(f"Created post with title: {title}", module="API-Routes")
     return RedirectResponse("/", status_code=303)
 
 @router.get("/posts/{post_id}", response_class=HTMLResponse)
 def read_post(request: Request, post_id: int, db: Session = Depends(get_db)):
     post = db.query(models.Post).filter(models.Post.postid == post_id).first()
     if not post:
+        logger.log(f"Attempted to access non-existing post with id: {post_id}", module="API-Routes")
         raise HTTPException(status_code=404, detail="Post not found")
+    logger.log(f"Accessed post with id: {post_id}", module="API-Routes")
     return templates.TemplateResponse("single_post.html", {"request": request, "post": post})
 
 @router.get("/update-post/{post_id}", response_class=HTMLResponse)
 def update_post_form(request: Request, post_id: int, db: Session = Depends(get_db)):
     post = db.query(models.Post).filter(models.Post.postid == post_id).first()
     if not post:
+        logger.log(f"Attempted to update non-existing post with id: {post_id}", module="API-Routes")
         raise HTTPException(status_code=404, detail="Post not found")
     return templates.TemplateResponse("update_post.html", {"request": request, "post": post})
 
@@ -64,6 +70,7 @@ def update_post_in_db(post_id: int, title: str = Form(...), content: str = Form(
                       authorid: int = Form(...), blogid: int = Form(...), db: Session = Depends(get_db)):
     db_post = db.query(models.Post).filter(models.Post.postid == post_id).first()
     if not db_post:
+        logger.log(f"Attempted to update non-existing post with id: {post_id}", module="API-Routes")
         raise HTTPException(status_code=404, detail="Post not found")
     
     # Update the fields with new data
@@ -75,16 +82,18 @@ def update_post_in_db(post_id: int, title: str = Form(...), content: str = Form(
     
     db.commit()
     db.refresh(db_post)
-    
+    logger.log(f"Updated post with id: {post_id}", module="API-Routes")
     return RedirectResponse(f"/posts/{post_id}", status_code=303)
 
 @router.post("/delete-post/{post_id}")
 def delete_post(request: Request, post_id: int, db: Session = Depends(get_db)):
     db_post = db.query(models.Post).filter(models.Post.postid == post_id).first()
     if not db_post:
+        logger.log(f"Attempted to delete non-existing post with id: {post_id}", module="API-Routes")
         raise HTTPException(status_code=404, detail="Post not found")
     db.delete(db_post)
     db.commit()
+    logger.log(f"Deleted post with id: {post_id}", module="API-Routes")
     return RedirectResponse("/", status_code=303)
 
 # Include the router in the FastAPI app
