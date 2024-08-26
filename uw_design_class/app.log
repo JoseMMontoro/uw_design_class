@@ -1,0 +1,24 @@
+[DatabaseConnection] Database engine created.
+[API-Routes] Accessed home page with 7 posts
+[API-Routes] Created post with title: It's a new day for Lily - and now we have a Singleton logger!
+[API-Routes] Accessed home page with 8 posts
+[DatabaseConnection] Creating a new database session.
+[API-Routes] Accessed home page with 8 posts
+[DatabaseConnection] Creating a new database session.
+[API-Routes] Accessed post with id: 31
+[DatabaseConnection] Closing the database session.
+[DatabaseConnection] Creating a new database session.
+[API-Routes] Accessed home page with 8 posts
+[DatabaseConnection] Closing the database session.
+[DatabaseConnection] Creating a new database session.
+[API-Routes] Accessed post with id: 30
+[DatabaseConnection] Closing the database session.
+[DatabaseConnection] Creating a new database session.
+[DatabaseConnection] Closing the database session.
+[DatabaseConnection] Creating a new database session.
+[API-Routes] Updated post with id: 30
+[DatabaseConnection] Closing the database session.
+[DatabaseConnection] Creating a new database session.
+[API-Routes] Accessed post with id: 30
+[DatabaseConnection] Closing the database session.
+[General] All loggers are same instance: True
