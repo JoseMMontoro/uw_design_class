@@ -1,12 +1,11 @@
 import threading
-from typing import Self
 
 
 class SingletonLogger:
     _instance = None
     _lock = threading.Lock() # Lock so that only one thread can access at a time
 
-    def __new__(cls) -> Self:
+    def __new__(cls):
         if cls._instance is None:
             with cls._lock:
                 if cls._instance is None: # check for each thread that no class is initiated
