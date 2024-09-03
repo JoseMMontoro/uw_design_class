@@ -2,7 +2,7 @@ from sqlalchemy import (Column, DateTime, ForeignKey, Integer, String, Table,
                         Text)
 from sqlalchemy.orm import relationship
 
-from uw_design_class.database_connection import Base
+from uw_design_class.database_setup import Base
 
 # Association tables
 blog_tag = Table('blogtag', Base.metadata,
